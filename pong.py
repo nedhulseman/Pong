@@ -6,7 +6,7 @@ pygame.init()
 
 WINDOWWIDTH = 600
 WINDOWHEIGHT = 300
-MOVESPEED = 15
+MOVESPEED = 10
 
 threeRIGHT = '3right'
 twoRIGHT = '2right'
@@ -38,8 +38,8 @@ scores=[player1Score, player2Score]
 canvas=pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), 0, 32)
 pygame.display.set_caption('Pong')
 
-leftPaddle=pygame.draw.rect(canvas, WHITE, (40, 200, 11, 80))
-rightPaddle=pygame.draw.rect(canvas, WHITE, (WINDOWWIDTH-30, 200, 10, 77))
+leftPaddle=pygame.draw.rect(canvas, WHITE, (40, 160, 11, 77))
+rightPaddle=pygame.draw.rect(canvas, WHITE, (WINDOWWIDTH-30, 160, 10, 77))
 paddles = [leftPaddle, rightPaddle]
 ball = {'rect':pygame.Rect(WINDOWWIDTH/2, WINDOWHEIGHT/2, 10, 10), 
         'color':WHITE, 'dir': None}
@@ -131,9 +131,9 @@ def checkHitSide(ball, windowheight):
 def checkHitPaddle(ball, paddle):
     if 'right' in ball['dir']:
         if ball['rect'].left + ball['rect'].width >= paddle.left and ball['rect'].left + ball['rect'].width <= paddle.left + paddle.width:
-           if ball['rect'].top + ball['rect'].height >= paddle.top and ball['rect'].top <= paddle.top + 11:
+           if ball['rect'].top + ball['rect'].height >= paddle.top and ball['rect'].top + ball['rect'].height < paddle.top + 11:
                ball['dir'] = '3left'
-           elif ball['rect'].top + ball['rect'].height > paddle.top + 11 and ball['rect'].top <= paddle.top + 22:
+           elif ball['rect'].top + ball['rect'].height >= paddle.top + 11 and ball['rect'].top <= paddle.top + 22:
                 ball['dir'] = '2left'
            elif ball['rect'].top + ball['rect'].height > paddle.top + 22 and ball['rect'].top <= paddle.top + 33:
                 ball['dir'] = '1left'
@@ -147,21 +147,20 @@ def checkHitPaddle(ball, paddle):
                 ball['dir'] = '-3left'
     if 'left' in ball['dir']:
         if ball['rect'].left <= paddle.left + paddle.width and ball['rect'].left >= paddle.left:
-            if ball['rect'].top + ball['rect'].height >= paddle.top and ball['rect'].top < paddle.top + 40:
-                 ball['dir'] = '3right'
-            elif ball['rect'].top + ball['rect'].height > paddle.top + 11 and ball['rect'].top <= paddle.top + 22:
-                 ball['dir'] = '2right'
-            elif ball['rect'].top + ball['rect'].height > paddle.top + 22 and ball['rect'].top <= paddle.top + 33:
-                 ball['dir'] = '1right'
-            elif ball['rect'].top + ball['rect'].height > paddle.top + 33 and ball['rect'].top <= paddle.top + 44:
-                 ball['dir'] = 'right'
-            elif ball['rect'].top + ball['rect'].height > paddle.top + 44 and ball['rect'].top <= paddle.top + 55:
-                 ball['dir'] = '-1right'
-            elif ball['rect'].top + ball['rect'].height > paddle.top + 55 and ball['rect'].top <= paddle.top + 66:
-                 ball['dir'] = '-2right'
-            elif ball['rect'].top + ball['rect'].height > paddle.top + 66 and ball['rect'].top <= paddle.top + 77:
-                 ball['dir'] = '-3right'
-                
+           if ball['rect'].top + ball['rect'].height >= paddle.top and ball['rect'].top + ball['rect'].height < paddle.top + 11:
+               ball['dir'] = '3right'
+           elif ball['rect'].top + ball['rect'].height >= paddle.top + 11 and ball['rect'].top <= paddle.top + 22:
+                ball['dir'] = '2right'
+           elif ball['rect'].top + ball['rect'].height > paddle.top + 22 and ball['rect'].top <= paddle.top + 33:
+                ball['dir'] = '1right'
+           elif ball['rect'].top + ball['rect'].height > paddle.top + 33 and ball['rect'].top <= paddle.top + 44:
+                ball['dir'] = 'right'
+           elif ball['rect'].top + ball['rect'].height > paddle.top + 44 and ball['rect'].top <= paddle.top + 55:
+                ball['dir'] = '-1right'
+           elif ball['rect'].top + ball['rect'].height > paddle.top + 55 and ball['rect'].top <= paddle.top + 66:
+                ball['dir'] = '-2right'
+           elif ball['rect'].top + ball['rect'].height > paddle.top + 66 and ball['rect'].top <= paddle.top + 77:
+                ball['dir'] = '-3right'           
 def score(scores, windowwidth, windowheight, ball, directions):
     if ball['rect'].left < 0 or ball['rect'].left + ball['rect'].width > windowwidth:
         if ball['rect'].left < 0:
@@ -169,7 +168,6 @@ def score(scores, windowwidth, windowheight, ball, directions):
         else:
             scores[0] += 1
         startGame(ball, directions, windowwidth, windowheight)
-        print(scores)
 
 def printScore(scores):
     top = 10
@@ -259,7 +257,7 @@ while True:
     
     if iterator == 0:
         startGame(ball, directions, WINDOWWIDTH, WINDOWHEIGHT)
-    movingBall(ball, 2)   
+    movingBall(ball, 1)   
     checkHitSide(ball, WINDOWHEIGHT)
 
     for pad in paddles:
@@ -284,5 +282,6 @@ while True:
     pygame.display.update()
     iterator += 1
     time.sleep(.02)
+
 
 
