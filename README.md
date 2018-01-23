@@ -25,6 +25,7 @@ from random import randint
 
 In order to run the game, simply execute the entire script and the pygame console will pop up on the screen. The game will start after about 3 seconds.
 
+The left side controls the paddle with Q and A. The ride side controls it with The arrow keys.
 
 
 ## Authors
